@@ -1,7 +1,10 @@
 package com.ict.spring.member.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -107,15 +110,46 @@ public class MemberController {
 	 * 		생략 가능한 어노테이션이 많지만 가독성을 위해 보통 다 적어주는게 좋다.
 	 * 
 	 */
-	@RequestMapping(value="login.do",method=RequestMethod.POST)
-	public String memberLogin(Member m) {
-		System.out.println("ID : " + m.getId());
-		System.out.println("PWD : " + m.getPwd());
+//	@RequestMapping(value="login.do",method=RequestMethod.POST)
+//	public String memberLogin(Member m, HttpSession session) {
+//		System.out.println("ID : " + m.getId());
+//		System.out.println("PWD : " + m.getPwd());
+//		
+//		Member loginUser = mService.loginMember(m);
+//		
+//		if(loginUser != null) {
+//			//로그인 성공
+//			session.setAttribute("loginUser", loginUser);
+//		}else {
+//			//로그인 실패
+//			//errorPage로 보내준다
+//			return "common/errorPage";
+//		}
+//		
+//		return "redirect:home.do";
+//	}
+	
+	//	전달받는 것에 대한게 아니라 요청 후전달하고자 하는 데이터가 잇을 경우에 대한 방법
+	/**
+	 * 	1. Model 객체를 사용하는 방법
+	 * 	커맨드 객체로 Model을 사용하게되면 뷰로 전달하고자하는 데이터를 맵형식(key,value)로 담을 때 사용한다.
+	 */
+	
+	@RequestMapping(value="login.do", method=RequestMethod.POST)
+	public String memberLogin(Member m,Model model,HttpSession session) {
 		
 		Member loginUser = mService.loginMember(m);
 		
-		return "home";
+		if(loginUser != null) {
+			// 로그인 성공
+			session.setAttribute("loginUser", loginUser);
+			return "redirect:home.do";
+		}else {
+			model.addAttribute("msg","로그인 실패");
+			return "common/errorPage";
+		}
 	}
+	
 	
 }
 
