@@ -73,7 +73,7 @@
 	<!-- url로 어떤 요청이 오느냐에 따라서 해당 필터를 거쳐가게끔 할지 url-pattern을 작성 -->
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>	
-		<url-patten>/*</url-patten>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
 </web-app>
