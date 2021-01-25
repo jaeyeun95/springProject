@@ -1,16 +1,19 @@
 package com.ict.spring.member.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ict.spring.member.model.service.MemberService;
 import com.ict.spring.member.model.vo.Member;
 
 @Controller	// Controller타입의 클래스로 선언해서 빈 스캐닝에 자동으로 등록시켜서 빈객체를 만들겠다.(이름을 지정하지 않으면 클래스명
 			// 앞에 글자를 소문자로해서 id가 만들어진다.
 public class MemberController {
 	
+	@Autowired
+	private MemberService mService;
 	/**
 	 * @RequestMapping(value="login.do",method=RequestMethod.POST)
 	 * 
@@ -108,6 +111,8 @@ public class MemberController {
 	public String memberLogin(Member m) {
 		System.out.println("ID : " + m.getId());
 		System.out.println("PWD : " + m.getPwd());
+		
+		Member loginUser = mService.loginMember(m);
 		
 		return "home";
 	}
