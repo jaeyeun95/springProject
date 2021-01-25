@@ -59,5 +59,21 @@
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/WEB-INF/views/common/errorPage.jsp</location>
 	</error-page>
+	
+	<!-- 한글 깨짐 방지 인코딩 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>	
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<!-- url로 어떤 요청이 오느냐에 따라서 해당 필터를 거쳐가게끔 할지 url-pattern을 작성 -->
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>	
+		<url-patten>/*</url-patten>
+	</filter-mapping>
 
 </web-app>
