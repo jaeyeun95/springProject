@@ -48,13 +48,24 @@ public class MemberController {
 	 * 		파라미터 value속성에 없는 값이 넘어오는 경우 ""이기 때문에 에러는 안난다.
 	 * */
 	
-	@RequestMapping(value="login.do",method=RequestMethod.POST)
-	public String memberLogin(@RequestParam("id") String id,
-							  @RequestParam("pwd") String pwd) {
-		System.out.println("ID : " + id);
-		System.out.println("PWD : " + pwd);
-		
-		return "home";
-	}
+//	@RequestMapping(value="login.do",method=RequestMethod.POST)
+//	public String memberLogin(@RequestParam("id") String id,
+//							  @RequestParam("pwd") String pwd) {
+//		System.out.println("ID : " + id);
+//		System.out.println("PWD : " + pwd);
+//		
+//		return "home";
+//	}
+	
+	/**
+	 * 3.	@RequestParam 어노테이션 생략
+	 * 
+	 * 		위의 어노테이션을 생략해도 파라미터 값을 가져와서 변수에 저장할 수 있다.
+	 * 		(단, 매개변수를 name값과 동일하게 해야 자동으로 값이 주입된다.)
+	 * 
+	 * 		다만 어노테이션을 생략할 경우 defaultValue와 required설정 불가
+	 * 		없는 파라미터일 경우 null값이 입력
+	 * 
+	 */
 	
 }
