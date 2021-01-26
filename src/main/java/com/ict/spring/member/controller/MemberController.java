@@ -5,12 +5,18 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.spring.member.model.service.MemberService;
 import com.ict.spring.member.model.vo.Member;
 
+//@SessionAttributes("loginUser")	//시작할떄 loginuser라는 키값이 자동으로 만들어진다. 매번 선언할 필요가 없다.
+@SessionAttributes({"loginUser","loginAdmin"})
 @Controller	// Controller타입의 클래스로 선언해서 빈 스캐닝에 자동으로 등록시켜서 빈객체를 만들겠다.(이름을 지정하지 않으면 클래스명
 			// 앞에 글자를 소문자로해서 id가 만들어진다.
 public class MemberController {
@@ -135,23 +141,97 @@ public class MemberController {
 	 * 	커맨드 객체로 Model을 사용하게되면 뷰로 전달하고자하는 데이터를 맵형식(key,value)로 담을 때 사용한다.
 	 */
 	
-	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String memberLogin(Member m,Model model,HttpSession session) {
+//	@RequestMapping(value="login.do", method=RequestMethod.POST)
+//	public String memberLogin(Member m,Model model,HttpSession session) {
+//		
+//		Member loginUser = mService.loginMember(m);
+//		
+//		if(loginUser != null) {
+//			// 로그인 성공
+//			session.setAttribute("loginUser", loginUser);
+//			return "redirect:home.do";
+//		}else {
+//			model.addAttribute("msg","로그인 실패");
+//			return "common/errorPage";
+//		}
+//	}
+	
+	/*
+	 * 2. ModelAndView 객체를 사용하는 방법
+	 * 
+	 * Model은 전달하고자 하는 데이터를 맵 형식으로 담는 공간이라고 했다면
+	 * View는 requestDispatcher처럼 forward 할 뷰 페이지 정보를 담은 객체
+	 * 
+	 * ModelAndView는 이 두가지를 합쳐놓은 객체
+	 */
+//	@RequestMapping(value="login.do",method=RequestMethod.POST)
+//	public ModelAndView memberLogin(Member m, ModelAndView mv,HttpSession session) {
+//		
+//		Member loginUser = mService.loginMember(m);
+//		
+//		if(loginUser != null) {
+//			session.setAttribute("loginUser", loginUser);
+//			mv.setViewName("redirect:home.do");
+//		}else {
+//			mv.addObject("msg","로그인 실패!");
+//			mv.setViewName("common/errorPage");
+//		}
+//		return mv;
+//	}
+	
+	/**
+	 * 로그아웃용 컨트롤러
+	 * @param session
+	 * @return
+	 */
+//	@RequestMapping("logout.do")
+//	public String logout(HttpSession session) { session.invalidate();
+//		session.invalidate();
+//		return "redirect:home.do";
+//	}
+	
+	/*
+	 * 3. session에 저장할 때 @SessionAttributes
+	 *    Model에 Attribute가 추가될 때 자동으로 키값을 찾아서 세션에 등록하는 기능을 제공하는 어노테이션
+	 * 
+	 */
+	@RequestMapping(value="login.do",method=RequestMethod.POST)
+	public String memberLogin(@ModelAttribute Member m, Model model) {
 		
 		Member loginUser = mService.loginMember(m);
 		
 		if(loginUser != null) {
-			// 로그인 성공
-			session.setAttribute("loginUser", loginUser);
+			model.addAttribute("loginUser",loginUser);
+			/* model.addAttribute("loginAdmin",loginUser); */
 			return "redirect:home.do";
 		}else {
-			model.addAttribute("msg","로그인 실패");
+			model.addAttribute("msg", "로그인 실패");
 			return "common/errorPage";
 		}
 	}
 	
+	@RequestMapping("logout.do")
+	public String logout(SessionStatus status) {
+		// 로그아웃을 처리를 위해서 커맨드 객체로 세션의 상태를 관리할 수 있는 SessionStatus 객체가 필요하다.
+		
+		// 세션의 상태를 확정지어주는 메소드 호출
+		status.setComplete();
+		
+		return "redirect:home.do";
+	}
+	
 	
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
