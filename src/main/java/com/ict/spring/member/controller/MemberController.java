@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -216,6 +217,43 @@ public class MemberController {
 		
 		// 세션의 상태를 확정지어주는 메소드 호출
 		status.setComplete();
+		
+		return "redirect:home.do";
+	}
+	
+	// -------------------------------- 회원 가입 -------------------------------------//
+	
+	@RequestMapping("enrollView.do")
+	public String enrollView() {
+		return "member/memberInsertForm";
+	}
+	
+	@RequestMapping("minsert.do")
+	public String insertMember(@ModelAttribute Member m, Model model,
+							   @RequestParam("post") String post,
+							   @RequestParam("address1") String address1,
+							   @RequestParam("address2") String address2) {
+		
+		// 회원가입전에 회원정보를 출력
+		System.out.println("Member 정보 : " + m);
+		System.out.println("Address 정보 : " + post + ", " + address1 + ", " + address2);
+		
+		
+		/*
+		 * 비밀번호 -> 평문으로 되어있다. 1234
+		 * DB에 저장을 할때 평문으로 저장하면 안되기 때문에 "암호화" 처리를 한다.
+		 * 
+		 * 스프링 시큐리티라는 모듈에서 제공하는 bcrypt라는 암호화 방식으로 암호화 처리를 할꺼다.
+		 * 
+		 * * bcrypt란?
+		 * 	 DB에 비밀번호를 저장할 목적으로 설계되었다.
+		 * 
+		 *   jsp/servlet 에서 했던 SHA-512암호화(단방향해쉬알고리즘)
+		 *   
+		 *   단점 : 111 평문 동일한 암호화 코드를 반환한다.
+		 *   
+		 *   해결점 : 솔팅(salting) -> 원문에 아주작은랜덤문자열 추가해서 암호화 코드를 발생시킨다.
+		 */
 		
 		return "redirect:home.do";
 	}
