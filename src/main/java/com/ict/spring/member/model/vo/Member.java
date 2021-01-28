@@ -128,5 +128,4 @@ public class Member {
 				+ ", updateDate=" + updateDate + ", mStatus=" + mStatus + "]";
 	}
 	
-	
 }
