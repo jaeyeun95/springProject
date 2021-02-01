@@ -2,13 +2,20 @@ package com.ict.spring.notice.model.service;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ict.spring.notice.model.dao.NoticeDao;
 import com.ict.spring.notice.model.vo.Notice;
 
 @Service("noticeService") // Service 관련된 어노테이션  = Service, 자바 소스로는 레퍼런스라고 생각하면됨
 public class NoticeServiceImpl implements NoticeService {	//추상 메소드를 상속받아서 완성시킴
 
+	// 의존성 주입(DI : Dependency Injection)
+	@Autowired
+	private NoticeDao noticeDao;
+	
+	public NoticeServiceImpl() {}
 	@Override
 	public ArrayList<Notice> selectAll() {
 		// TODO Auto-generated method stub
