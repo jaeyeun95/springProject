@@ -23,11 +23,11 @@
 					<td width="150">* 아이디</td>
 					<td>
 						<input type="text" name="id" id="userId" required>
-					<!-- ajax를 적용  -->
-					<span class="guide ok">사용가능</span>
-					<span class="guide error">사용불가능</span>
-					<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
-					<!-- ajax를 적용  -->
+						<!-- ajax를 적용  -->
+						<span class="guide ok">사용가능</span>
+						<span class="guide error">사용불가능</span>
+						<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
+						<!-- ajax를 적용  -->
 					</td>
 				</tr>
 				<tr>
@@ -152,6 +152,29 @@
 		});
 	
 	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </body>
 </html>

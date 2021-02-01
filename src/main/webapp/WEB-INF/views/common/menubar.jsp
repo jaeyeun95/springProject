@@ -33,7 +33,7 @@
 </head>
 <body>
 	<c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application"/>
-
+	<%--"contextPath" == context-root명 --%>
 	<h1 align="center">Finally Last Subject Spring!</h1>
 	<br>
 	
