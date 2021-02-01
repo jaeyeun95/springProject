@@ -17,6 +17,13 @@
 <hr>
 <h1 align="center">공지사항</h1>
 <br>
+<c:if test="${ !empty sessionScope.loginUser and sessionScope.loginUser.id eq 'admin'}">
+	<div style="align:center; padding-left:400px;">
+	<c:url var="nwf" value="/nwform.do"></c:url>
+	<button onclick="javascript:location.href='${ nwf }';">글쓰기</button>
+	</div>
+</c:if>
+<br>
 <table align="center" width="500" border="1" cellspacing="0" cellpadding="1">
 <tr><th>번호</th><th>제목</th><th>작성자</th><th>첨부파일</th><th>날짜</th></tr>
 <c:forEach items="${ requestScope.list }" var="n">
