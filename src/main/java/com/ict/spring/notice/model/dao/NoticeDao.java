@@ -1,6 +1,9 @@
 package com.ict.spring.notice.model.dao;
 
+
+
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +19,29 @@ public class NoticeDao {
 	
 	public NoticeDao() {}
 	
-	public ArrayList<Notice> selectList(){}
+	public ArrayList<Notice> selectList(){
+		List<Notice> list = sqlSession.selectList("noticeMapper.selectAll");	//noticeMapper.selectAll 을 리턴하겠다
+		return (ArrayList<Notice>)list;
+	}
 	
-	public Notice selectOne(int nid) {}
+	public Notice selectOne(int nid) {
+		return null;
+	}
 	
-	public int insertNotice(Notice notice) {}
+	public int insertNotice(Notice notice) {
+		return 0;
+	}
 	
-	public int updateNotice(Notice notice) {}
+	public int updateNotice(Notice notice) {
+		return 0;
+	}
 	
-	public int deleteNotice(int nid) {}
+	public int deleteNotice(int nid) {
+		return 0;
+	}
 	
-	public ArrayList<Notice> selectNewTop3(){}
+	public ArrayList<Notice> selectNewTop3(){
+		return null;
+	}
 
 }

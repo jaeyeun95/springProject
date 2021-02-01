@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="noticeMapper">
 	
-	<resultMap id="noticeResultSet" type="Member">
+	<resultMap id="noticeResultSet" type="Notice">
 		<id property="nid" column="NID"/>
-		<result property="ntitle" column="NID"/>
+		<result property="ntitle" column="NTITLE"/>
 		<result property="nwriter" column="NWRITER"/>
 		<result property="ncontent" column="NCONTENT"/>
 		<result property="n_create_date" column="N_CREATE_DATE"/>
@@ -12,75 +12,10 @@
 		<result property="file_path" column="FILE_PATH"/>
 	</resultMap>
 	
-	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
-		<!-- 암호화 전 -->
-		<!-- SELECT
-		       *
-		  FROM MEMBER
-		 WHERE ID = #{ id }
-		   AND PWD = #{pwd}
-		   AND M_STATUS='Y' -->
-		<!-- 암호화 후 -->
-		SELECT
-			   *
-	      FROM MEMBER
-	     WHERE ID=#{ id }
-	       AND M_STATUS= 'Y'
+	<select id="selectAll" resultMap="noticeResultset">
+		select * from notice
+		order by nid desc
 	</select>
-
-	<insert id="insertMember" parameterType="Member">
-		INSERT 
-		  INTO MEMBER
-		VALUES ( 
-				 #{ id }
-		       , #{ pwd }
-		       , #{ name }
-		       , #{ email }
-		       , #{ gender }
-		       , #{ age }
-		       , #{ phone }
-		       , #{ address }
-		       , sysdate
-		       , sysdate
-		       , default		
-      	       )
-	</insert>
-	
-	<update id="deleteMember" parameterType="string">
-		UPDATE
-		       MEMBER
-		   SET M_STATUS='N'
-		 WHERE ID=#{id}
-	</update>
-	
-	<update id="updateMember" parameterType="Member">
-		UPDATE
-				MEMBER
-		  SET
-		  		EMAIL= #{ email }
-		  	  , PWD=#{ pwd }
-		  	  , AGE = #{ age }
-		  	  , PHONE = #{ phone }
-		  	  , ADDRESS = #{ address }
-		  	  , UPDATE_DATE = SYSDATE
-		WHERE ID = #{ id }
-		<!-- 비밀번호를 되려면 새로운 비밀번호를 받을거냐 바꿀거냐 -->
-	</update>
-	
-	<select id="idCheck" parameterType="string" resultType="_int">
-		SELECT
-		       COUNT(*)
-		  FROM MEMBER
-		 WHERE id=#{id}
-	</select>
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

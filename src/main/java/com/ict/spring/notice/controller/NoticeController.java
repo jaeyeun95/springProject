@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ict.spring.notice.model.service.NoticeService;
 import com.ict.spring.notice.model.vo.Notice;
@@ -29,6 +30,20 @@ public class NoticeController {
 			return "notice/noticeListView";
 		}else {
 			model.addAttribute("msg", "등록된 공지사항 정보가 없습니다.");
+			return "common/errorPage";
+		}
+	}
+	
+	//공지글 상세보기 요청 처리용
+	@RequestMapping("ndetail.do")
+	public String noticeDetailMethod(@RequestParam("nid") int nid, Model model) {	//RequestParam은 파싱까지 해줌, 객체 처리를 위해 model사용
+		Notice notice = noticeService.selectNotice(nid);
+		
+		if(notice != null) {
+			model.addAttribute("notice", notice);
+			return "notice/noticeDetailView";
+		}else {
+			model.addAttribute("msg", nid + "번 공지글 상세보기 실패");
 			return "common/errorPage";
 		}
 	}
