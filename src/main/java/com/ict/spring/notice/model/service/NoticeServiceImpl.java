@@ -18,8 +18,7 @@ public class NoticeServiceImpl implements NoticeService {	//추상 메소드를 
 	public NoticeServiceImpl() {}
 	@Override
 	public ArrayList<Notice> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return noticeDao.selectList();
 	}
 
 	@Override
