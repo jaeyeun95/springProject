@@ -22,7 +22,7 @@
 <c:forEach items="${ requestScope.list }" var="n">
 <tr>
 	<td align="center">${ n.nid }</td>
-	<c:url value="/ndetail.do" var="und">
+	<c:url value="ndetail.do" var="und">
 		<c:param name="nid" value="${ n.nid }"/>
 	</c:url>
 	<td align="center"><a href="${ und }">${ n.ntitle }</a></td>

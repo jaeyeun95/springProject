@@ -13,6 +13,8 @@ public class Notice implements java.io.Serializable{
 	private Date n_modify_date;
 	private String file_path;
 	
+	public Notice() {}
+	
 	public Notice(int nid, String ntitle, String nwriter, String ncontent, Date n_create_date, Date n_modify_date,
 			String file_path) {
 		super();

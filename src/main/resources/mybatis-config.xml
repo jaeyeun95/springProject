@@ -4,10 +4,10 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
-	
+
 	<typeAliases>
 		<typeAlias type="com.ict.spring.member.model.vo.Member" alias="Member"/>
-		<typeAlias type="com.ict.spring.notice.model.vo.Notice" alias="Notice"/>	<!-- 등록안하면 패키지명을 다 붙여야함 -->
+		<typeAlias type="com.ict.spring.notice.model.vo.Notice" alias="Notice"/>
 	</typeAliases>
 	
 	<mappers>

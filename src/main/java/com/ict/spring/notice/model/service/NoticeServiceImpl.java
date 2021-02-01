@@ -8,14 +8,12 @@ import org.springframework.stereotype.Service;
 import com.ict.spring.notice.model.dao.NoticeDao;
 import com.ict.spring.notice.model.vo.Notice;
 
-@Service("noticeService") // Service 관련된 어노테이션  = Service, 자바 소스로는 레퍼런스라고 생각하면됨
-public class NoticeServiceImpl implements NoticeService {	//추상 메소드를 상속받아서 완성시킴
-
-	// 의존성 주입(DI : Dependency Injection)
+@Service("noticeService")
+public class NoticeServiceImpl implements NoticeService {
+	//의존성 주입(new 객체 생성 구문 자동으로)
 	@Autowired
 	private NoticeDao noticeDao;
 	
-	public NoticeServiceImpl() {}
 	@Override
 	public ArrayList<Notice> selectAll() {
 		return noticeDao.selectList();
@@ -23,8 +21,7 @@ public class NoticeServiceImpl implements NoticeService {	//추상 메소드를 
 
 	@Override
 	public Notice selectNotice(int nid) {
-		// TODO Auto-generated method stub
-		return null;
+		return noticeDao.selectOne(nid);
 	}
 
 	@Override
@@ -50,5 +47,6 @@ public class NoticeServiceImpl implements NoticeService {	//추상 메소드를 
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

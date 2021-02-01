@@ -10,6 +10,6 @@ public interface NoticeService {	// 인터페이스 = 메소드의 선언만 되
 	int insertNotice(Notice notice);	
 	int updateNotice(Notice notice);	//mybatis 기본 메소드
 	int deleteNotice(int nid);
-	ArrayList<Notice> selectNewTop3();	
+	ArrayList<Notice> selectNewTop3();
 	
 }
