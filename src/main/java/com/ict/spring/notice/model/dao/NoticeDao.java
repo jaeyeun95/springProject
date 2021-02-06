@@ -32,15 +32,16 @@ public class NoticeDao {
 	}
 	
 	public int updateNotice(Notice notice) {
-		return 0;
+		return sqlSession.update("noticeMapper.updateNotice", notice);
 	}
 	
 	public int deleteNotice(int nid) {
-		return 0;
+		return sqlSession.delete("noticeMapper.deleteNotice", nid);
 	}
 	
-	public ArrayList<Notice> selectNewTop3(){
-		return null;
+	public ArrayList<Notice> selectNewTop3(){	
+		List<Notice> list = sqlSession.selectList("noticeMapper.selectNewTop3");	//두개가 동시에 형변환이 안되서 일단 list로 받고 리턴할 때 ArrayList로 형변환
+		return (ArrayList<Notice>)list;
 	}
 
 }
