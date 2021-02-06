@@ -43,9 +43,22 @@
 	<th>내 용</th>
 	<td>${ notice.ncontent }</td>
 </tr>
-<tr>
-	<th colspan="2"><button onclick="javascript:history.go(-1);">목록</button></th>
-</tr>
+<tr><th colspan="2">
+<%-- 수정페이지로 이동 버튼 --%>
+<c:url var="nup" value="/upmove.do">
+	<c:param name="nid" value="${ notice.nid }"/>
+</c:url>
+<button onclick="javascript:location.href='${ nup }'">수정페이지로 이동</button> &nbsp;
+<%-- 삭제하기 버튼 --%>
+<c:url var="ndel" value="/ndel.do">
+	<c:param name="nid" value="${ notice.nid }"/>
+	<c:if test="${ !empty notice.file_path }">
+		<c:param name="file_path" value="${ notice.file_path }"/>
+	</c:if>
+</c:url>
+<button onclick="javascript:location.href='${ ndel }'">글삭제</button> &nbsp;
+<%-- 이전페이지로 이동 --%>
+<button onclick="javascript:history.go(-1);">목록</button></th></tr>
 </table>
 </body>
 </html>

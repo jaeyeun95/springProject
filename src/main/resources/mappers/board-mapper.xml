@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper">	<!-- 자바로 따지면 패키지명 -->
+
+	<resultMap type="Board" id="resultBoard">
+		<id column="bid" property="bid"/>
+		<result column="btitle" property="btitle"/>
+		<result column="bwriter" property="bwriter"/>
+		<result column="bcontent" property="bcontent"/>
+		<result column="original_filename" property="original_filename"/>
+		<result column="rename_filename" property="rename_filename"/>
+		<result column="bcount" property="bcount"/>
+		<result column="b_create_date" property="b_create_date"/>
+		<result column="b_modify_date" property="b_modify_date"/>
+		<result column="b_status" property="b_status"/>
+	</resultMap>
+	
+	<resultMap type="Board" id="resultTop3">
+		<id column="bid" property="bid" />
+		<result column="btitle" property="btitle"/>
+		<result column="bcount" property="bcount"/>
+	</resultMap>
+
+	<!-- 비교연산자를 쿼리문에 그냥 사용하면, 마이바티스에서 
+		  태그 엘리먼트의 꺽쇠괄호 등(<, >, &) 와 혼동하는 문제가 발생할 수 있음
+		  이 문제를 미리 방지하기 위해 xml 코드 중 xml parser 에 의해 해석하지 말고
+		  문장 그대로 해석하라는 뜻으로 <![CDATA[ 쿼리문장 ]]> 사용함
+	 -->
+
+	<select id="selectTop3" resultMap="resultTop3">
+		<![CDATA[
+		SELECT * 
+		FROM (SELECT ROWNUM RNUM, BID, BTITLE, BCOUNT
+		            FROM (SELECT * FROM BOARD
+		                      ORDER BY BCOUNT DESC))
+		WHERE RNUM >= 1 AND RNUM <=3
+		]]>
+	</select>
+	
+	<select id="selectBoard" parameterType="_int" resultMap="resultBoard">	<!-- 전달값을 받아서 처리하면 parameterType이 필요 -->
+		select * from board
+		where bid = #{bid}
+	</select>
+	
+	<update id="updateBcount" parameterType="_int">
+		update board
+		set bcount = bcount + 1
+		where bid = #{bid}
+	</update>
+	
+	<!-- 테이블 전체 행수 조회하는 쿼리문 -->
+	<select id="getListCount" resultType="_int">
+		select count(*) from board
+	</select>
+	
+	<select id="selectList" parameterType="com.ict.spring.board.model.vo.BoardPage" 
+	resultMap="resultBoard">	<!-- parameterType="com.ict.spring.board.model.vo.Boardpage"에서 전달이 왔다 -->
+		<![CDATA[
+			SELECT *
+			FROM (SELECT ROWNUM RNUM, BID, BTITLE, BWRITER, BCONTENT,
+			                    ORIGINAL_FILENAME, RENAME_FILENAME, BCOUNT, 
+			                    B_CREATE_DATE, B_MODIFY_DATE, B_STATUS
+			            FROM (SELECT * FROM BOARD
+			                        WHERE B_STATUS= 'Y'
+			                        ORDER BY BID DESC))
+			WHERE RNUM >= #{ startRow } AND RNUM <= #{ endRow }
+		]]>
+	</select>
+	
+	<insert id="insertBoard" parameterType="Board">
+		insert into board
+		<!-- 첨부파일이 있을때, 없을때는 mybatis에서 널처리해서 에러뜸? -->
+		<if test="original_filename != null">
+		values (seq_bid.nextval, #{ btitle }, #{ bwriter }, #{ bcontent },
+		#{ original_filename }, #{ rename_filename }, default, sysdate, sysdate, default)
+		</if>
+		<!-- 첨부파일이 없을 때  -->
+		<if test="original_filename == null">
+		values (seq_bid.nextval, #{ btitle }, #{ bwriter }, #{ bcontent },
+		null, null, default, sysdate, sysdate, default)
+		</if>
+	</insert>
+	
+	<update id="updateBoard" parameterType="Board">
+		update board
+		set btitle = #{ btitle},
+			bcontent = #{ bcontent},
+			b_modify_date = sysdate
+			<!-- 첨부파일이 있었는데 없애는 경우 -->
+			<if test="original_filename == null">
+			, original_filename = null,
+			rename_filename = null
+			</if>
+			<!-- 첨부파일이 없었는데 생기거나 바꾸는 경우 -->
+			<if test="original_filename != null">
+			, original_filename = #{ original_filename },
+			rename_filename = #{ rename_filename }
+			</if>
+		where bid = #{ bid }
+	</update>
+	
+	<update id="changeBstatusN" parameterType="_int">		<!-- DML문에서는 returntype을 쓰지않는다? -->
+		update board
+		set b_status = 'N',
+			b_modify_date = sysdate
+		where bid = #{ bid }	
+	</update>
+	
+</mapper>
