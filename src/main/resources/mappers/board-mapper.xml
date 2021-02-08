@@ -53,6 +53,22 @@
 		select count(*) from board
 	</select>
 	
+	<select id="getSearchTitleListCount" resultType="_int" parameterType="string">
+		select count(*) from board
+		where btitle like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchWriterListCount" resultType="_int" parameterType="string">
+		select count(*) from board
+		where bwriter like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchDateListCount" resultType="_int"
+	 parameterType="com.ict.spring.common.SearchDate">
+		select count(*) from board
+		where b_create_date between #{ begin } and #{ end }
+	</select>
+	
 	<select id="selectList" parameterType="com.ict.spring.board.model.vo.BoardPage" 
 	resultMap="resultBoard">	<!-- parameterType="com.ict.spring.board.model.vo.Boardpage"에서 전달이 왔다 -->
 		<![CDATA[

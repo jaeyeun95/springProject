@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.ict.spring.board.model.vo.Board;
 import com.ict.spring.board.model.vo.BoardPage;
 import com.ict.spring.common.SearchAndPage;
+import com.ict.spring.common.SearchDate;
 
 @Repository("boardDao")
 public class BoardDao {
@@ -69,5 +70,18 @@ public class BoardDao {
 		List<Board> list = sqlSession.selectList("boardMapper.searchDate", searches);
 		return (ArrayList<Board>)list;
 	}
+	
+	public int getSearchDateListCount(SearchDate dates) {
+		return sqlSession.selectOne("boardMapper.getSearchDateListCount", dates);
+	}
+
+	public int getSearchTitleListCount(String keyword) {
+		return sqlSession.selectOne("boardMapper.getSearchTitleListCount", keyword);
+	}
+
+	public int getSearchWriterListCount(String keyword) {
+		return sqlSession.selectOne("boardMapper.getSearchWriterListCount", keyword);
+	}
+
 
 }

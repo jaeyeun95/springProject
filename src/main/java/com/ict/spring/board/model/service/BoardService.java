@@ -19,4 +19,7 @@ public interface BoardService {
 	ArrayList<Board> selectSearchTitle(SearchAndPage searches);
 	ArrayList<Board> selectSearchWriter(SearchAndPage searches);
 	ArrayList<Board> selectSearchDate(SearchAndPage searches);
+	int getSearchDateListCount(SearchDate dates);
+	int getSearchWriterListCount(String keyword);
+	int getSearchTitleListCount(String keyword);
 }
