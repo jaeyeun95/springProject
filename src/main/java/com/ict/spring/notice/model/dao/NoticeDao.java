@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ict.spring.notice.model.vo.Notice;
+import com.ict.spring.notice.model.vo.SearchDate;
 
 @Repository("noticeDao")
 public class NoticeDao {
@@ -41,6 +42,21 @@ public class NoticeDao {
 	
 	public ArrayList<Notice> selectNewTop3(){	
 		List<Notice> list = sqlSession.selectList("noticeMapper.selectNewTop3");	//두개가 동시에 형변환이 안되서 일단 list로 받고 리턴할 때 ArrayList로 형변환
+		return (ArrayList<Notice>)list;
+	}
+
+	public ArrayList<Notice> selectSearchTitle(String keyword) {
+		List<Notice> list = sqlSession.selectList("noticeMapper.searchTitle", keyword);
+		return (ArrayList<Notice>)list;
+	}
+
+	public ArrayList<Notice> selectSearchWriter(String keyword) {
+		List<Notice> list = sqlSession.selectList("noticeMapper.searchWriter", keyword);
+		return (ArrayList<Notice>)list;
+	}
+
+	public ArrayList<Notice> selectSearchDate(SearchDate dates) {
+		List<Notice> list = sqlSession.selectList("noticeMapper.searchDate", keyword);
 		return (ArrayList<Notice>)list;
 	}
 

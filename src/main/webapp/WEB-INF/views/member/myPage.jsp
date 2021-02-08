@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@
+	
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,6 +72,14 @@
 					<td>전화번호</td>
 					<td><input type="tel" name="phone" value="${ loginUser.phone }"></td>
 				</tr>
+			<%-- 	<c:forEach items="${ requestScope.list }" var="b">
+				<tr>
+					<td>내가 쓴 게시글</td>
+					<td>
+						<input type="text" value="${ b.btitle }">
+					</td>
+				</tr>
+				</c:forEach> --%>
 				<c:if test="${ empty loginUser.address }">
 					<tr>
 						<td>우편번호</td>
@@ -129,6 +140,7 @@
 							<c:param name="id" value="${ loginUser.id }"/>
 						</c:url>
 						<button type="button" onclick="location.href='${ mdelete }';">탈퇴하기</button>
+						<button type="button" onclick="location.href='${ mboard }';">내가 쓴 글 보기</button>
 						<input type="reset" value="취소하기">
 					</td>
 				</tr>
