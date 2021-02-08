@@ -13,6 +13,6 @@ public interface NoticeService {	// 인터페이스 = 메소드의 선언만 되
 	int deleteNotice(int nid);
 	ArrayList<Notice> selectNewTop3();
 	ArrayList<Notice> selectSearchTitle(String keyword);
-	ArrayList<Notice> selectSearhcWriter(String keyword);
+	ArrayList<Notice> selectSearchWriter(String keyword);
 	ArrayList<Notice> selectSearchDate(SearchDate dates);
 }

@@ -49,16 +49,18 @@ public class NoticeServiceImpl implements NoticeService {
 	public ArrayList<Notice> selectSearchTitle(String keyword) {
 		return noticeDao.selectSearchTitle(keyword);
 	}
-
+	
 	@Override
-	public ArrayList<Notice> selectSearhcWriter(String keyword) {
+	public ArrayList<Notice> selectSearchWriter(String keyword) {
 		return noticeDao.selectSearchWriter(keyword);
 	}
+
 
 	@Override
 	public ArrayList<Notice> selectSearchDate(SearchDate dates) {
 		return noticeDao.selectSearchDate(dates);
 	}
+
 
 
 }

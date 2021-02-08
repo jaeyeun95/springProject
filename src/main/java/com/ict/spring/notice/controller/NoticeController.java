@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ict.spring.member.model.vo.Member;
 import com.ict.spring.notice.model.service.NoticeService;
 import com.ict.spring.notice.model.vo.Notice;
+import com.ict.spring.notice.model.vo.SearchDate;
 
 
 @Controller
@@ -34,6 +35,47 @@ public class NoticeController {
 
 	@Autowired // 자동 DI 선언을 위해서 사용
 	private NoticeService noticeService;
+	
+	@RequestMapping(value="nsearchTitle.do", method=RequestMethod.POST)
+	public String noticeSearchTitleMethod(
+			@RequestParam("keyword") String keyword, Model model) {
+		ArrayList<Notice> list = noticeService.selectSearchTitle(keyword);
+
+		if (list.size() > 0) {
+			model.addAttribute("list", list); // list이름으로 list를 담아줘라
+			return "notice/noticeListView";
+		} else {
+			model.addAttribute("msg", keyword + "로 검색된 공지사항 정보가 없습니다.");
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping(value="nsearchWriter.do", method=RequestMethod.POST)
+	public String noticeSearchWriterMethod(
+			@RequestParam("keyword") String keyword, Model model) {
+		ArrayList<Notice> list = noticeService.selectSearchWriter(keyword);
+
+		if (list.size() > 0) {
+			model.addAttribute("list", list); // list이름으로 list를 담아줘라
+			return "notice/noticeListView";
+		} else {
+			model.addAttribute("msg", keyword + "로 검색된 공지사항 정보가 없습니다.");
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping(value="nsearchDate.do", method=RequestMethod.POST)
+	public String noticeSearchDateMethod(SearchDate dates, Model model) {
+		ArrayList<Notice> list = noticeService.selectSearchDate(dates);
+
+		if (list.size() > 0) {
+			model.addAttribute("list", list); // list이름으로 list를 담아줘라
+			return "notice/noticeListView";
+		} else {
+			model.addAttribute("msg", "날짜로 검색된 공지사항 정보가 없습니다.");
+			return "common/errorPage";
+		}
+	}
 	
 	//ajax 로 최신 공지글 조회 처리용
 	@RequestMapping(value="ntop3.do", method=RequestMethod.POST)

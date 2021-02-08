@@ -56,7 +56,7 @@ public class NoticeDao {
 	}
 
 	public ArrayList<Notice> selectSearchDate(SearchDate dates) {
-		List<Notice> list = sqlSession.selectList("noticeMapper.searchDate", keyword);
+		List<Notice> list = sqlSession.selectList("noticeMapper.searchDate", dates);
 		return (ArrayList<Notice>)list;
 	}
 
