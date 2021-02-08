@@ -3,7 +3,7 @@ package com.ict.spring.notice.model.service;
 import java.util.ArrayList;
 
 import com.ict.spring.notice.model.vo.Notice;
-import com.ict.spring.notice.model.vo.SearchDate;
+import com.ict.spring.common.SearchDate;
 
 public interface NoticeService {	// 인터페이스 = 메소드의 선언만 되있음
 	ArrayList<Notice> selectAll(); //--> 미완성 메소드 abstract 메소드

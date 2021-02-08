@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ict.spring.board.model.dao.BoardDao;
 import com.ict.spring.board.model.vo.Board;
+import com.ict.spring.common.SearchAndPage;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -51,6 +52,21 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int deleteBoard(int bid) {
 		return boardDao.deleteBoard(bid);
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchTitle(SearchAndPage searches) {
+		return boardDao.selectSearchTitle(searches);
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchWriter(SearchAndPage searches) {
+		return boardDao.selectSearchWriter(searches);
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchDate(SearchAndPage searches) {
+		return boardDao.selectSearchDate(searches);
 	}
 
 }

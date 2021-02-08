@@ -67,6 +67,51 @@
 		]]>
 	</select>
 	
+	<select id="searchTitle" parameterType="com.ict.spring.common.SearchAndPage" 
+	resultMap="resultBoard">
+			<![CDATA[
+			SELECT *
+			FROM (SELECT ROWNUM RNUM, BID, BTITLE, BWRITER, BCONTENT,
+			                    ORIGINAL_FILENAME, RENAME_FILENAME, BCOUNT, 
+			                    B_CREATE_DATE, B_MODIFY_DATE, B_STATUS
+			            FROM (SELECT * FROM BOARD
+			                        WHERE B_STATUS= 'Y'
+			                        and btitle like '%' || #{ keyword } || '%'
+			                        ORDER BY BID DESC))
+			WHERE RNUM >= #{ startRow } AND RNUM <= #{ endRow }
+			]]>
+	</select>
+	
+	<select id="searchWriter" parameterType="com.ict.spring.common.SearchAndPage"
+	 resultMap="resultBoard">
+		<![CDATA[
+			SELECT *
+			FROM (SELECT ROWNUM RNUM, BID, BTITLE, BWRITER, BCONTENT,
+			                    ORIGINAL_FILENAME, RENAME_FILENAME, BCOUNT, 
+			                    B_CREATE_DATE, B_MODIFY_DATE, B_STATUS
+			            FROM (SELECT * FROM BOARD
+			                        WHERE B_STATUS= 'Y'
+			                        and bwriter like '%' || #{ keyword } || '%'
+			                        ORDER BY BID DESC))
+			WHERE RNUM >= #{ startRow } AND RNUM <= #{ endRow }
+			]]>
+	</select>
+	
+	<select id="searchDate" parameterType="com.ict.spring.common.SearchAndPage"
+	resultMap="resultBoard">	<!-- mybatis가 제공하는 select object는 begin과 end를 같이 가져올수 없기 때문에 하나의 객체에 넣어줘야 한다. (전달할 인자는 무조건 object로만가능) -->
+		<![CDATA[
+			SELECT *
+			FROM (SELECT ROWNUM RNUM, BID, BTITLE, BWRITER, BCONTENT,
+			                    ORIGINAL_FILENAME, RENAME_FILENAME, BCOUNT, 
+			                    B_CREATE_DATE, B_MODIFY_DATE, B_STATUS
+			            FROM (SELECT * FROM BOARD
+			                        WHERE B_STATUS= 'Y'
+			                        and b_create_date between #{ begin } and #{ end }
+			                        ORDER BY BID DESC))
+			WHERE RNUM >= #{ startRow } AND RNUM <= #{ endRow }
+			]]>
+	</select>
+	
 	<insert id="insertBoard" parameterType="Board">
 		insert into board
 		<!-- 첨부파일이 있을때, 없을때는 mybatis에서 널처리해서 에러뜸? -->

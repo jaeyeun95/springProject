@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ict.spring.board.model.vo.Board;
 import com.ict.spring.board.model.vo.BoardPage;
+import com.ict.spring.common.SearchAndPage;
 
 @Repository("boardDao")
 public class BoardDao {
@@ -52,6 +53,21 @@ public class BoardDao {
 
 	public int deleteBoard(int bid) {
 		return sqlSession.update("boardMapper.changeBstatusN", bid);
+	}
+
+	public ArrayList<Board> selectSearchTitle(SearchAndPage searches) {
+		List<Board> list = sqlSession.selectList("boardMapper.searchTitle", searches);
+		return (ArrayList<Board>)list;
+	}
+
+	public ArrayList<Board> selectSearchWriter(SearchAndPage searches) {
+		List<Board> list = sqlSession.selectList("boardMapper.searchWriter", searches);
+		return (ArrayList<Board>)list;
+	} 
+
+	public ArrayList<Board> selectSearchDate(SearchAndPage searches) {
+		List<Board> list = sqlSession.selectList("boardMapper.searchDate", searches);
+		return (ArrayList<Board>)list;
 	}
 
 }

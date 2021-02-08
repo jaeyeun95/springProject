@@ -17,7 +17,35 @@
 <head>
 <meta charset="UTF-8">
 <title>first</title>
+<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
+$(function(){
+	showDiv();
+	
+	$("input[name=item]").on("change", function(){	//radio 버튼 상태가 바뀌면 showDiv()함수가 실행 되라
+		showDiv();
+	});
+	
+function showDiv(){
+	if($("input[name=item]").eq(0).is(":checked")){
+		$("#titleDiv").css("display", "block");
+		$("#writerDiv").css("display", "none");
+		$("#dateDiv").css("display", "none");
+	}
+	
+	if($("input[name=item]").eq(1).is(":checked")){
+		$("#titleDiv").css("display", "none");
+		$("#writerDiv").css("display", "block");
+		$("#dateDiv").css("display", "none");
+	}
+	
+	if($("input[name=item]").eq(2).is(":checked")){
+		$("#titleDiv").css("display", "none");
+		$("#writerDiv").css("display", "none");
+		$("#dateDiv").css("display", "block");
+	}
+}
+});
 
 function showWriteForm(){
    location.href = "${ bwf }";
@@ -33,6 +61,46 @@ function showWriteForm(){
       <button onclick="showWriteForm();">글쓰기</button>
    </div>
 </c:if>
+<br>
+<%-- 검색기능 --%>
+<center>
+<div>
+	<h2>검색할 항목을 선택하시오.</h2>
+	<input type="radio" name="item" value="title" checked> 제목 &nbsp; &nbsp; &nbsp;
+	<input type="radio" name="item" value="writer"> 작성자 &nbsp; &nbsp; &nbsp;
+	<input type="radio" name="item" value="date"> 날짜
+</div>
+<div id="titleDiv">
+	<form action="bsearchTitle.do" method="post">
+	<input type="hidden" name="page" value="1">
+	<label>검색할 제목을 입력하시오 : <input type="search" name="keyword"></label>
+	<input type="submit" value="검색">
+	</form>
+</div>
+<div id="writerDiv">
+<form action="bsearchWriter.do" method="post">
+	<input type="hidden" name="page" value="1">
+	<label>검색할 작성자 아이디를 입력하시오 : <input type="search" name="keyword"></label>
+	<input type="submit" value="검색">
+	</form>
+</div>
+<div id="dateDiv">
+<form action="bsearchDate.do" method="post">
+	<input type="hidden" name="page" value="1">
+	<label>검색할 날짜를 입력하시오 : 
+	<input type="date" name="begin"> ~ <input type="date" name="end"></label>
+	<input type="submit" value="검색">
+	</form>
+</div>
+</center>
+<br>
+<%-- 목록 출력 --%>
+<div style="align:center; padding-left:400px;">
+	<c:url var="blist" value="/blist.do">
+		<c:param name="page" value="1"/>
+	</c:url>
+	<button onclick="javascript:location.href='${ blist }';">전체 목록 보기</button>
+</div>
 <br>
 <table align="center" border="1" width="700" cellspacing="0">
    <tr>
@@ -70,7 +138,7 @@ function showWriteForm(){
    <br>
    <%-- 페이징 처리 
    [맨처음][이전] 숫자...........  [다음][맨끝]
---%>
+	--%>
    <div style="text-align: center;">
       <%-- 현재 페이지가 1이 아니면 링크설정, 현재 1페이지이면 링크없음 --%>
       <c:if test="${ currentPage <=1 }">
