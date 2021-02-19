@@ -311,7 +311,7 @@ public class MemberController {
 		}else {
 			model.addAttribute("msg", "로그인 실패");
 			return "common/errorPage";
-		}
+		} 
 	}
 	
 	@RequestMapping("myInfo.do")

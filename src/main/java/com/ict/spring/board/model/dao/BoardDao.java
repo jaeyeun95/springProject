@@ -1,6 +1,7 @@
 package com.ict.spring.board.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -45,7 +46,8 @@ public class BoardDao {
 	}
 
 	public int insertBoard(Board board) {
-		return sqlSession.insert("boardMapper.insertBoard", board);
+		 return sqlSession.insert("boardMapper.insertBoard", board); 
+		
 	}
 
 	public int updateBoard(Board board) {

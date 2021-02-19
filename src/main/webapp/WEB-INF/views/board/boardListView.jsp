@@ -43,6 +43,7 @@ if($("input[name=item]").eq(2).is(":checked")){ //세번째가 선택 되어 있
    $("#writerDiv").css("display", "none");
    $("#dateDiv").css("display", "block");
 }
+
 }
 function showWriteForm(){   
    location.href = "${ bwf }";
